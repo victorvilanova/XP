@@ -144,6 +144,7 @@ class LocalesServiceProvider extends ServiceProvider
         "pl" => "Polish",
         "ps" => "Pashto",
         "pt" => "Portuguese",
+        "pt-BR" => "Português (do Brazil)",
         "qu" => "Quechua",
         "rm" => "Raeto-Romance",
         "rn" => "Kirundi",
@@ -258,41 +259,22 @@ class LocalesServiceProvider extends ServiceProvider
 
     public static function getUserPreferredLocale($request)
     {
-
         if (!InstallerServiceProvider::checkIfInstalled()) {
-            return Config::get('app.locale');
+            return Config::get('app.locale'); // Deve ser 'pt-BR'
         }
 
-        if (!Session::has('locale')) {
-            if (Cookie::get('app_locale')) {
-                return Cookie::get('app_locale');
-            }
-            if (getSetting('site.use_browser_language_if_available')) {
-                $preferredLang = explode('-', $request->server('HTTP_ACCEPT_LANGUAGE'))[0] ?? null;
-                if ($preferredLang) {
-                    return $preferredLang; // If user has missing locale setting - default on site setting
-                }
-            }
-            return getSetting('site.default_site_language');
+        // Se não houver uma preferência definida, forçamos 'pt-BR'
+        if (!Session::has('locale') && !Cookie::get('app_locale')) {
+            return 'pt-BR';
         }
 
+        // Se o usuário estiver autenticado e tiver uma configuração de idioma, use-a
         if (isset(Auth::user()->settings['locale'])) {
             return Auth::user()->settings['locale'];
-        } else {
-            if (Cookie::get('app_locale')) {
-                return Cookie::get('app_locale');
-            } else {
-                if (getSetting('site.use_browser_language_if_available')) {
-                    $preferredLang = explode('-', $request->server('HTTP_ACCEPT_LANGUAGE'))[0] ?? null;
-                    if ($preferredLang) {
-                        return $preferredLang; // If user has missing locale setting - we default on site setting on the LocaleSetter
-                    } else {
-                        return getSetting('site.default_site_language');
-                    }
-                }
-                return getSetting('site.default_site_language');
-            }
         }
+
+        // Caso contrário, use o valor armazenado no cookie ou, se não existir, o default do site
+        return Cookie::get('app_locale', getSetting('site.default_site_language'));
     }
 
     /**

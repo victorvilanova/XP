@@ -63,7 +63,7 @@ return [
     | [NOTE]: Locale feature supported on Turnstile via <captcha-container /> component.
     |
     */
-    'locale' => env('CAPTCHA_LOCALE', 'en'),
+    'locale' => env('CAPTCHA_LOCALE', 'pt-BR'),
 
     /*
     |------------------------------------------------------------

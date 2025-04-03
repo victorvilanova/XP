@@ -26,7 +26,7 @@ class UploadAttachamentRequest extends FormRequest
     {
         if(Request::route() && in_array(Request::route()->parameter('type'), ['payment-request', 'verify-asset'])) {
             return [
-                'file' => 'required|mimes:'.'jpg,jpeg,png,pdf,xls,xlsx'.'|max:'.(string) ((int) getSetting('media.max_file_upload_size') * 1024),
+                'file' => 'required|mimes:'.'jpg,jpeg,png,pdf,xls,xlsx, mp4'.'|max:'.(string) ((int) getSetting('media.max_file_upload_size') * 1024),
             ];
         } else {
             return [

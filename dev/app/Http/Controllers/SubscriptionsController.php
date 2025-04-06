@@ -63,4 +63,10 @@ class SubscriptionsController extends Controller
         return Redirect::route('my.settings', ['type' => 'subscriptions', 'active' => $request->route('redirectTo')])
             ->with('success', __('Successfully canceled subscription'));
     }
+
+    // Método para exibir a página de assinaturas
+    public function index()
+    {
+        return view('subscriptions.index');
+    }
 }

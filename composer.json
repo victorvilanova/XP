@@ -97,9 +97,5 @@
         ]
     },
     "repositories": {
-        "hooks": {
-            "type": "composer",
-            "url": "https://larapack.io"
-        }
     }
 }

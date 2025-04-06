@@ -103,7 +103,10 @@
                                                         <label for="countrySelect">
                                                             <span>{{__('Country')}}</span>
                                                         </label>
-                                                        <select class="country-select form-control input-sm uifield-country" id="countrySelect" required onchange="checkout.validateCountryField()"></select>
+                                                        <select id="country-select" name="country" style="cursor: pointer;">
+                                                            <option value="">Selecione um país</option>
+                                                            <!-- Opções de países serão carregadas dinamicamente -->
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="billingCity">

@@ -286,6 +286,9 @@ Route::get('/{username}', ['uses' => 'ProfileController@index', 'as'   => 'profi
 Route::get('/{username}/posts', ['uses' => 'ProfileController@getUserPosts', 'as'   => 'profile.posts']);
 Route::get('/{username}/streams', ['uses' => 'ProfileController@getUserStreams', 'as'   => 'profile.streams']);
 
+// Verifique se a rota para assinaturas está configurada corretamente
+Route::get('/subscriptions', ['uses' => 'SubscriptionsController@index', 'as' => 'subscriptions.index']);
+
 Route::fallback(function () {
     abort(404);
 });

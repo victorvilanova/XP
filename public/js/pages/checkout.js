@@ -457,26 +457,32 @@ var checkout = {
      * Fetches list of countries, in order to calculcate taxes
      */
     fillCountrySelectOptions: function () {
-        $.ajax({
-            type: 'GET',
-            url: app.baseUrl + '/countries',
-            success: function (result) {
-                if (result !== null && typeof result.countries !== 'undefined' && result.countries.length > 0) {
-                    $('.country-select').find('option').remove().end().append('<option value="">'+trans("Select a country")+'</option>');
-                    $.each(result.countries, function (i, item) {
-                        let selected = checkout.paymentData.country !== null && checkout.paymentData.country === item.name;
-                        $('.country-select').append($('<option>', {
-                            value: item.id,
-                            text: item.name,
-                            selected: selected
-                        }).data({taxes: item.taxes}));
-                        if (selected) {
-                            checkout.updatePaymentSummaryData();
-                        }
-                    });
-                }
-            }
-        });
+        const countrySelect = document.getElementById('country-select');
+
+        fetch('/api/countries')
+            .then(response => response.json())
+            .then(data => {
+                countrySelect.innerHTML = '<option value="">Selecione um país</option>';
+                data.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.code;
+                    option.textContent = country.name;
+                    countrySelect.appendChild(option);
+                });
+
+                // Habilitar o select após carregar as opções
+                setTimeout(() => {
+                    countrySelect.disabled = false;
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os países:', error);
+
+                // Tentar habilitar o select mesmo em caso de erro
+                setTimeout(() => {
+                    countrySelect.disabled = false;
+                }, 100);
+            });
     },
 
     /**

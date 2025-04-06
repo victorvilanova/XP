@@ -31,3 +31,7 @@
         </div>
     </div>
 </div>
+<script>
+     console.log("Traduções carregadas:", window.translations);
+     console.log("Tradução de 'Enter only if you are over 18':", trans("Enter only if you are over 18"));
+   </script>

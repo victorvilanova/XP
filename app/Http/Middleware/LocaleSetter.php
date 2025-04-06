@@ -37,7 +37,8 @@ class LocaleSetter
             LocalesServiceProvider::setLocale('en');
         }
         // Here, we could read and cache all translationsm, and put the active one in the session
-        session()->put('app_translations', file_get_contents($langPath.'.json'));
+        $translations = json_decode(file_get_contents($langPath.'.json'), true);
+        session()->put('app_translations', json_encode($translations));
 
         return $next($request);
     }

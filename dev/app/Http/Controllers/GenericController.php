@@ -59,7 +59,7 @@ class GenericController extends Controller
     {
         // Get the locale from the request
         $requestedLocale = $request->route('locale');
-        $defaultLocale = 'en';
+        $defaultLocale = 'pt-BR'; //retornar pt-BR
         $locale = $requestedLocale;
 
         // Construct the path to the language file
